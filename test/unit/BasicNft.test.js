@@ -1,12 +1,11 @@
 const { assert } = require("chai");
-const { BigNumber } = require("ethers");
 const { ethers, deployments, getNamedAccounts, network } = require("hardhat");
 
 describe("BasicNft", function () {
   console.log("테스트 코드 시작");
   let basicNft;
   beforeEach(async function () {
-    await deployments.fixture("all");
+    await deployments.fixture("basicNft");
     const { deployer } = await getNamedAccounts();
     basicNft = await ethers.getContract("BasicNft", deployer);
     console.log(basicNft.address)
