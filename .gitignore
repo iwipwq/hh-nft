@@ -1,5 +1,6 @@
 .env
 node_modules
+images
 
 #hardhat
 artifacts
@@ -7,3 +8,4 @@ cache
 deployments
 coverage
 gas-report.txt
+coverage.json
