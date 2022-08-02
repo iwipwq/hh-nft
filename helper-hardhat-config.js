@@ -9,6 +9,7 @@ const networkConfig = {
         subscriptionId: "7276",
         callbackGasLimit: "500000", // 500,000
         interval: "30",
+        mintFee: ethers.utils.parseEther("0.01")
     },
     31337: {
         name: "localhost",
@@ -16,6 +17,7 @@ const networkConfig = {
         keyHash: "0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc", //모의계약이기때문에 뭐가와도 상관없음(비어있어도 돌아감)
         callbackGasLimit: "500000", // 500,000
         interval: "30",
+        mintFee: ethers.utils.parseEther("0.01")
     }
 }
 

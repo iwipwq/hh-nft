@@ -27,9 +27,9 @@ module.exports = {
   networks: {
     hardhat: {
       chainId: 31337,
-      forking: {
-        url: MAINNET_RPC_URL,
-      }
+      // forking: {
+      //   url: MAINNET_RPC_URL,
+      // }
     },
     rinkeby: {
       chainId: 4,
@@ -58,6 +58,6 @@ module.exports = {
     token: "ETH",
   },
   mocha: {
-    timeOut: 300000,
+    timeout: 300000,
   },
 };

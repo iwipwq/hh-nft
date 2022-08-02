@@ -86,6 +86,7 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         // What does this token look like?
         uint256 moddedRng = randomWords[0] % MAX_CHANCE_VALUE;
         Rarity frameRarity = getRarityFromModdedRng(moddedRng);
+        s_tokenCounter += s_tokenCounter;
         _safeMint(frameOwner, newTokenId);
         _setTokenURI(newTokenId, s_frameTokenUris[uint256(frameRarity)]);
         emit NftMinted(frameRarity, frameOwner);
@@ -138,5 +139,9 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
 
     function getTokenCounter() public view returns (uint256) {
         return s_tokenCounter;
+    }
+
+    function getSubscriptionId() public view returns (uint256) {
+        return i_subscriptionId;
     }
 }
