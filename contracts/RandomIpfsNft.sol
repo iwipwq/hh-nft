@@ -6,6 +6,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "hardhat/console.sol";
 
 error RandomIpfsNft__RangeOutOfBounds();
 error RandomIpfsNft__NeedMoreETHsent();
@@ -26,7 +27,7 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         frame335
     }
 
-    VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
+    VRFCoordinatorV2Interface public immutable i_vrfCoordinator;
     uint64 private immutable i_subscriptionId;
     bytes32 private immutable i_gasLane;
     uint32 private immutable i_callbackGasLimit;
@@ -35,6 +36,7 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
 
     // VRF Helper
     mapping(uint256 => address) public s_requestIdToSender;
+    uint256 public s_randomWords;
 
     // NFT Variables
     uint256 public s_tokenCounter;
@@ -66,6 +68,7 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         if (msg.value < i_mintFee) {
             revert RandomIpfsNft__NeedMoreETHsent();
         }
+        console.log("requestId start");
         requestId = i_vrfCoordinator.requestRandomWords(
             i_gasLane,
             i_subscriptionId,
@@ -75,15 +78,23 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         );
         s_requestIdToSender[requestId] = msg.sender;
         emit NftRequested(requestId, msg.sender);
+        console.log("NftRequested emit");
+        address abc = msg.sender;
+        i_vrfCoordinator.fulfillRandomWords(requestId, abc);
     }
 
     function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords)
         internal
         override
     {
+        console.log("fulfillRandomWords in RandomIpfsNft.sol");
+        uint256 s_ran = uint256(keccak256(abi.encode(1, 0)));
+        console.log("----s-ran-----",s_ran);
+        console.log("----s_randomWords-----",s_randomWords);
         address frameOwner = s_requestIdToSender[requestId];
         uint256 newTokenId = s_tokenCounter;
         // What does this token look like?
+        s_randomWords = randomWords[0];
         uint256 moddedRng = randomWords[0] % MAX_CHANCE_VALUE;
         Rarity frameRarity = getRarityFromModdedRng(moddedRng);
         s_tokenCounter += s_tokenCounter;
