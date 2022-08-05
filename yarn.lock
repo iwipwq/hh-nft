@@ -38,22 +38,24 @@
   integrity sha512-bvaTH34PMCbv6anRa9I/0zjLJgY4EuznbEMgbV77JBCQ9KNC46rzi0avuxpOfu+xDjPEtSFGqVEOr5GlUSGudA==
 
 "@eth-optimism/contracts@^0.5.21":
-  version "0.5.31"
-  resolved "https://registry.yarnpkg.com/@eth-optimism/contracts/-/contracts-0.5.31.tgz#2f5a9be37b4c309909d8206c877710e9769af858"
-  integrity sha512-I07EeyBBWwSsB6I/GodOLRydDtefWx4sdL3wCvNLSoCIUl2hUyisMmtTojOBXeT6vvfbiYkWc8jZlfXdbyJ7fA==
+  version "0.5.32"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/contracts/-/contracts-0.5.32.tgz#3cc1ba823e9e71662954321025267522b0e928b8"
+  integrity sha512-wHcilwbQGxllfl43Has5l8PAOghtukRgwdhnQqrdR+XshHwlgnNH5lE5/48BjqSJDykxovmqP9rjQvHEWd5qSw==
   dependencies:
-    "@eth-optimism/core-utils" "0.9.2"
+    "@eth-optimism/core-utils" "0.9.3"
     "@ethersproject/abstract-provider" "^5.6.1"
     "@ethersproject/abstract-signer" "^5.6.2"
 
-"@eth-optimism/core-utils@0.9.2":
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/@eth-optimism/core-utils/-/core-utils-0.9.2.tgz#f31241de997ec5dc8a4095d044d12f0558bb9f32"
-  integrity sha512-wUP75gZu1rZ+taXwUtcw00qCUbDkcn16JcIIK/j7XnzgaEnyXExn+ivz3rivFbr5Ool4c5M+iVzVF99sPZrCPA==
+"@eth-optimism/core-utils@0.9.3":
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/core-utils/-/core-utils-0.9.3.tgz#40c0271f815af68e0a4715e97a045a96462df7b6"
+  integrity sha512-b3V8qBgM0e85wdp3CNdJ6iSUvjT2k86F9oCAYeCIXQcQ6+EPaetjxP0T6ct6jLVepnJjoPRlW/lvWslKk1UBGg==
   dependencies:
     "@ethersproject/abstract-provider" "^5.6.1"
+    "@ethersproject/properties" "^5.6.0"
     "@ethersproject/providers" "^5.6.8"
     "@ethersproject/transactions" "^5.6.2"
+    "@ethersproject/web" "^5.6.1"
     bufio "^1.0.7"
     chai "^4.3.4"
     ethers "^5.6.8"

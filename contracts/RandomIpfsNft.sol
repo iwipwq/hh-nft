@@ -36,7 +36,10 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
 
     // VRF Helper
     mapping(uint256 => address) public s_requestIdToSender;
+
+    // Test Variables
     uint256 public s_randomWords;
+    uint256 public s_moddedRng;
 
     // NFT Variables
     uint256 public s_tokenCounter;
@@ -68,7 +71,6 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         if (msg.value < i_mintFee) {
             revert RandomIpfsNft__NeedMoreETHsent();
         }
-        console.log("requestId start");
         requestId = i_vrfCoordinator.requestRandomWords(
             i_gasLane,
             i_subscriptionId,
@@ -77,10 +79,7 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
             NUM_WORDS
         );
         s_requestIdToSender[requestId] = msg.sender;
-        emit NftRequested(requestId, msg.sender);
-        console.log("NftRequested emit");
-        address abc = msg.sender;
-        i_vrfCoordinator.fulfillRandomWords(requestId, abc);
+        emit NftRequested(requestId, msg.sender); 
     }
 
     function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords)
@@ -88,16 +87,14 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         override
     {
         console.log("fulfillRandomWords in RandomIpfsNft.sol");
-        uint256 s_ran = uint256(keccak256(abi.encode(1, 0)));
-        console.log("----s-ran-----",s_ran);
-        console.log("----s_randomWords-----",s_randomWords);
         address frameOwner = s_requestIdToSender[requestId];
         uint256 newTokenId = s_tokenCounter;
         // What does this token look like?
         s_randomWords = randomWords[0];
         uint256 moddedRng = randomWords[0] % MAX_CHANCE_VALUE;
+        s_moddedRng = moddedRng;
         Rarity frameRarity = getRarityFromModdedRng(moddedRng);
-        s_tokenCounter += s_tokenCounter;
+        s_tokenCounter++;
         _safeMint(frameOwner, newTokenId);
         _setTokenURI(newTokenId, s_frameTokenUris[uint256(frameRarity)]);
         emit NftMinted(frameRarity, frameOwner);
@@ -143,16 +140,31 @@ contract RandomIpfsNft is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     function getFrameTokenUris(uint256 index)
         public
         view
-        returns (string memory)
+        returns (string memory s_frameTokenUri)
     {
-        return s_frameTokenUris[index];
+        if(index < s_frameTokenUris.length && index >= 0) {
+            return s_frameTokenUris[index];
+        } else {
+            revert RandomIpfsNft__RangeOutOfBounds();
+        }
     }
 
     function getTokenCounter() public view returns (uint256) {
         return s_tokenCounter;
     }
 
+    function getFrameTokenUrisLength() public view returns (uint256) {
+        return s_frameTokenUris.length;
+    }
+
     function getSubscriptionId() public view returns (uint256) {
         return i_subscriptionId;
+    }
+
+    function getContractBalance() public view returns (uint256, address) {
+        return (
+            address(this).balance,
+            address(this)
+        );
     }
 }
