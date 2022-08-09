@@ -9,7 +9,8 @@ const networkConfig = {
         subscriptionId: "7276",
         callbackGasLimit: "500000", // 500,000
         interval: "30",
-        mintFee: ethers.utils.parseEther("0.01")
+        mintFee: ethers.utils.parseEther("0.01"),
+        ethUsdPriceFeed: "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e",
     },
     31337: {
         name: "localhost",

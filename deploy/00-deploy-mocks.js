@@ -1,5 +1,8 @@
 const { developmentChains } = require("../helper-hardhat-config");
 
+const DECIMALS = "18";
+const INITIAL_PRICE = ethers.utils.parseEther("2000", "eth");
+
 module.exports = async function (hre) {
   const { deployments, getNamedAccounts, network, ethers } = hre;
 
@@ -16,6 +19,11 @@ module.exports = async function (hre) {
       log: true,
       args: args,
     });
+    await deploy("MockV3Aggregator",{
+      from: deployer,
+      log: true,
+      args: [DECIMALS ,INITIAL_PRICE]
+    })
     log("---------------모의계약이 배포되었습니다.---------------");
   }
 };
